@@ -1,11 +1,14 @@
 {
-  "name": "pokeapi",
-  "version": "1.0.0",
-  "description": "Template HTML, CSS & JS",
-  "main": "index.js",
+  "name": "pokeapistarter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "Antoine DC",
-  "license": "ISC"
+  "devDependencies": {
+    "vite": "^8.3.0"
+  }
 }
