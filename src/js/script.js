@@ -5,22 +5,35 @@ import {
   sortPokemons,
   renderPokemons,
   buildTypeButtons,
-  setTypeButtonActive,
 } from "./ui.js";
 
 let allPokemons = [];
-let currentType = null;
+const selectedTypes = new Set();
 let currentSort = "id";
 
 function render() {
   renderPokemons(
-    sortPokemons(filterByType(allPokemons, currentType), currentSort)
+    sortPokemons(filterByType(allPokemons, selectedTypes), currentSort)
   );
 }
 
 function selectType(typeName, button) {
-  currentType = typeName;
-  setTypeButtonActive(button);
+  if (typeName) {
+    if (selectedTypes.delete(typeName)) {
+      button.classList.remove("active");
+    } else {
+      selectedTypes.add(typeName);
+      button.classList.add("active");
+    }
+  } else {
+    selectedTypes.clear();
+    for (const b of document.querySelectorAll("#types button")) {
+      b.classList.remove("active");
+    }
+  }
+  const tous = document.querySelector("#types button");
+  if (selectedTypes.size === 0) tous.classList.add("active");
+  else tous.classList.remove("active");
   render();
 }
 
@@ -34,7 +47,7 @@ async function loadData(generation) {
     return;
   }
 
-  currentType = null;
+  selectedTypes.clear();
   buildTypeButtons(allPokemons, selectType);
   render();
 }

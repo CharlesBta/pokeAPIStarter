@@ -1,8 +1,8 @@
 import { TYPE_LABELS } from "./data.js";
 
-export function filterByType(list, typeName) {
-  if (!typeName) return list;
-  return list.filter((p) => p.apiTypes.some((t) => t.name === typeName));
+export function filterByType(list, types) {
+  if (types.size === 0) return list;
+  return list.filter((p) => p.apiTypes.some((t) => types.has(t.name)));
 }
 
 export function sortPokemons(list, criterion) {
@@ -48,12 +48,4 @@ export function buildTypeButtons(pokemons, onTypeSelected) {
     button.addEventListener("click", () => onTypeSelected(typeName, button));
     nav.appendChild(button);
   }
-}
-
-export function setTypeButtonActive(button) {
-  const nav = document.querySelector("#types");
-  for (const b of nav.querySelectorAll("button")) {
-    b.classList.remove("active");
-  }
-  button.classList.add("active");
 }
